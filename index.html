@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <style>
+        #map {
+            width: 890px;
+            height: 770px;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet.wms.js"></script>
+        <script src="data/Receivers_3.js"></script>
+        <script src="data/Sources_4.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[9.420359427213542,-75.18281405056206],[9.709526851432292,-74.84846421630914]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_UnidadesCronoestratigrficas_0');
+        map.getPane('pane_UnidadesCronoestratigrficas_0').style.zIndex = 400;
+        var layer_UnidadesCronoestratigrficas_0 = L.WMS.layer("http://srvags.sgc.gov.co/arcgis/services/Atlas_Geologico_2015/Atlas_Geologico_Colombiano_2015/MapServer/WMSServer", "0", {
+            pane: 'pane_UnidadesCronoestratigrficas_0',
+            format: 'image/png',
+            uppercase: true,
+            transparent: true,
+            continuousWorld : true,
+            tiled: true,
+            info_format: 'text/html',
+            opacity: 1,
+            identify: false,
+            attribution: '',
+        });
+        map.addLayer(layer_UnidadesCronoestratigrficas_0);
+        map.createPane('pane_Pliegues_1');
+        map.getPane('pane_Pliegues_1').style.zIndex = 401;
+        var layer_Pliegues_1 = L.WMS.layer("http://srvags.sgc.gov.co/arcgis/services/Atlas_Geologico_2015/Atlas_Geologico_Colombiano_2015/MapServer/WMSServer", "1", {
+            pane: 'pane_Pliegues_1',
+            format: 'image/png',
+            uppercase: true,
+            transparent: true,
+            continuousWorld : true,
+            tiled: true,
+            info_format: 'text/html',
+            opacity: 1,
+            identify: false,
+            attribution: '',
+        });
+        map.addLayer(layer_Pliegues_1);
+        map.createPane('pane_Fallas_2');
+        map.getPane('pane_Fallas_2').style.zIndex = 402;
+        var layer_Fallas_2 = L.WMS.layer("http://srvags.sgc.gov.co/arcgis/services/Atlas_Geologico_2015/Atlas_Geologico_Colombiano_2015/MapServer/WMSServer", "2", {
+            pane: 'pane_Fallas_2',
+            format: 'image/png',
+            uppercase: true,
+            transparent: true,
+            continuousWorld : true,
+            tiled: true,
+            info_format: 'text/html',
+            opacity: 1,
+            identify: false,
+            attribution: '',
+        });
+        map.addLayer(layer_Fallas_2);
+        function pop_Receivers_3(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SRF'] !== null ? autolinker.link(feature.properties['SRF'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['R_LINE'] !== null ? autolinker.link(feature.properties['R_LINE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['STATION'] !== null ? autolinker.link(feature.properties['STATION'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['X_COORD'] !== null ? autolinker.link(feature.properties['X_COORD'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Y_COORD'] !== null ? autolinker.link(feature.properties['Y_COORD'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ELEV'] !== null ? autolinker.link(feature.properties['ELEV'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Receivers_3_0() {
+            return {
+                pane: 'pane_Receivers_3',
+                radius: 0.8,
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(12,148,245,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Receivers_3');
+        map.getPane('pane_Receivers_3').style.zIndex = 403;
+        map.getPane('pane_Receivers_3').style['mix-blend-mode'] = 'normal';
+        var layer_Receivers_3 = new L.geoJson(json_Receivers_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Receivers_3',
+            layerName: 'layer_Receivers_3',
+            pane: 'pane_Receivers_3',
+            onEachFeature: pop_Receivers_3,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Receivers_3_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Receivers_3);
+        map.addLayer(layer_Receivers_3);
+        function pop_Sources_4(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SIN'] !== null ? autolinker.link(feature.properties['SIN'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['STATION'] !== null ? autolinker.link(feature.properties['STATION'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['S_LINE'] !== null ? autolinker.link(feature.properties['S_LINE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['X_COORD'] !== null ? autolinker.link(feature.properties['X_COORD'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Y_COORD'] !== null ? autolinker.link(feature.properties['Y_COORD'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ELEV'] !== null ? autolinker.link(feature.properties['ELEV'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Sources_4_0() {
+            return {
+                pane: 'pane_Sources_4',
+                radius: 1.2,
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(242,14,14,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Sources_4');
+        map.getPane('pane_Sources_4').style.zIndex = 404;
+        map.getPane('pane_Sources_4').style['mix-blend-mode'] = 'normal';
+        var layer_Sources_4 = new L.geoJson(json_Sources_4, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Sources_4',
+            layerName: 'layer_Sources_4',
+            pane: 'pane_Sources_4',
+            onEachFeature: pop_Sources_4,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Sources_4_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Sources_4);
+        map.addLayer(layer_Sources_4);
+        setBounds();
+        </script>
+    </body>
+</html>
